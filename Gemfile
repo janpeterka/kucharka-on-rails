@@ -90,3 +90,5 @@ group :test do
   gem 'bundler-audit'
   gem 'rails_best_practices'
 end
+
+gem 'feedback', path: 'feedback'
