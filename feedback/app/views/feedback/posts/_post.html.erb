@@ -1,0 +1,27 @@
+<div class="feedback--post-card">
+    <h2> <%= t("Description") %> </h2>
+    <p>
+        <%= post.description %>
+    </p>
+
+    <p>
+        <strong><%= t("Created at") %>:</strong> <%= l(post.created_at, format: "%A, %e %B, %Y • %l:%M").downcase %>
+    </p>
+
+    <p>
+        <strong><%= t("Status") %>:</strong> <%= Feedback::Post.human_enum_name(:status, post.status) %>
+    </p>
+
+    <% if Feedback.synchronization_backend.present? %>
+        Last synchronized: <%= post.last_synchronized_at %>
+        <br>
+    <% end %>
+
+    <% if post.issue_url.present? %>
+        You can see it <a href=<%= post.issue_url %>> here </a><br>
+    <% end %>
+
+    <%= link_to(t("Show more"), post) unless request.path.include?("posts/") %>
+
+    <%= button_to t("synchronize"), post_synchronize_path(post) if Feedback.synchronization_backend.present? %>
+</div>
